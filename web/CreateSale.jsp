@@ -19,7 +19,13 @@
         <link rel="stylesheet" href="dist/sweetalert.css">
     </head>
     <body>
-
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="CreateProduct.jsp">Inicio</a></li>
+        <li class="breadcrumb-item"><a href="ListProduct.jsp">Detalle</a></li>
+        <li class="breadcrumb-item active" aria-current="page"><a href="ShoppingCart.jsp">Carrito de Compra</a></li>
+    </ol>
+</nav> 
         <div class="container">
             <h1>Facturación y Envío</h1>
             <hr>

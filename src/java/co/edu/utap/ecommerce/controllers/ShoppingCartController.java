@@ -97,7 +97,7 @@ public class ShoppingCartController extends HttpServlet {
             for (Product item : shoppingCart) {
                 if (item.getCodigo().equals(id)) {
                     exist = true;
-                    int cantidadActual = p.getCantidad();
+                    int cantidadActual = item.getCantidad();
 
                     if (action.equals("add")) {
                         item.setCantidad(cantidadActual + 1);
@@ -114,7 +114,7 @@ public class ShoppingCartController extends HttpServlet {
                 }
             }
 
-            if (!exist) {
+            if (!exist && action.equals("add")) {
                 p.setCantidad(1);
                 shoppingCart.add(p);
             }
