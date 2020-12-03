@@ -6,6 +6,7 @@
 package co.edu.utap.ecommerce.controllers;
 
 import co.edu.utap.ecommerce.domain.Product;
+import co.edu.utap.ecommerce.service.ProductService;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -36,20 +37,50 @@ public class ShoppingCartController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        if(request.getParameter("btnIndex") != null){
+            Index(request, response);
+        }else{
+            ShoppingCart(request, response);
+        }        
+    }
+
+    private void Index(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        try {
+            
+            List<Product> products = new ArrayList<>();                      
+            ProductService productService = new ProductService();
+            products = productService.GetProducts();
+            request.setAttribute("products", products);
+
+            request.getRequestDispatcher("ShoppingCart.jsp").forward(request, response);
+        } catch (Exception ex) {
+            request.setAttribute("message", ex.getMessage());
+            request.setAttribute("type", "error");
+            request.getRequestDispatcher("ShoppingCart.jsp").forward(request, response);
+        }
+        
+    }
+    
+    private void ShoppingCart(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
         try {
 
             String id = request.getParameter("id");
             String action = request.getParameter("action");
 
             HttpSession session = request.getSession();
-            List<Product> products = new ArrayList<>();
+            
             List<Product> shoppingCart = new ArrayList<>();
             Product p = new Product();
 
-            if (session.getAttribute("products") != null) {
-                products = (List<Product>) session.getAttribute("products");
-            }
-
+            List<Product> products = new ArrayList<>();                      
+            ProductService productService = new ProductService();
+            products = productService.GetProducts();
+            request.setAttribute("products", products);
+           
             if (session.getAttribute("shoppingCart") != null) {
                 shoppingCart = (List<Product>) session.getAttribute("shoppingCart");
             }
@@ -90,15 +121,13 @@ public class ShoppingCartController extends HttpServlet {
 
             session.setAttribute("shoppingCart", shoppingCart);
 
-            request.setAttribute("message", "El proceso fue exitoso.");
-            request.setAttribute("type", "success");
-
             request.getRequestDispatcher("ShoppingCart.jsp").forward(request, response);
-        }catch(Exception ex){
+        } catch (Exception ex) {
             request.setAttribute("message", ex.getMessage());
             request.setAttribute("type", "error");
             request.getRequestDispatcher("ShoppingCart.jsp").forward(request, response);
         }
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

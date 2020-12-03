@@ -40,87 +40,92 @@
             
         <div class="container">
             <form method="post" action="ProductController">
-                <%    List<Product> products = new ArrayList();
-        
-        if(session.getAttribute("products") !=null){
-            products = (List<Product>)session.getAttribute("products");
-        }
-                    %>
-                    
-                    <h1> Productos ( <%=products.size()%> ) </h1><hr>
+
+                <%
+                    List<Product> products = new ArrayList();
+                    if (session.getAttribute("products") != null) {
+                        products = (List<Product>) session.getAttribute("products");
+                    }
+                %>
+
+                <h1>Productos ( <%= products.size()%> )</h1>
+                <hr>
                 <div class="form-row">
-                <br>
-                <div class="col-md-3">
-                    <label>Codigo: </label>
-                    <input type="text" placeholder="Ingrese el código" id="txtCodigo" name="txtCodigo"/>
+                    <div class="col-md-3">
+                        <label>Codigo:</label>
+                        <input class="form-control" type="text" placeholder="Ingrese el código" id="txtCodigo" name="txtCodigo" />
+                    </div>           
+                    <div class="col-md-3">
+                        <label>Nombre:</label>
+                        <input class="form-control" type="text" placeholder="Ingrese el nombre" id="txtNombre" name="txtNombre" />
+                    </div>
+                    <div class="col-md-3">
+                        <label>Cantidad:</label>
+                        <input class="form-control" type="number" placeholder="Ingrese la cantidad" id="txtCantidad" name="txtCantidad" />
+                    </div>
+                    <div class="col-md-3">
+                        <label>Precio</label>
+                        <input class="form-control" type="number" placeholder="Ingrese la cantidad" id="txtPrecio" name="txtPrecio" />
+                    </div>
                 </div>
-                
-                <div class="col-md-3">
-                    <label>Nombre: </label>
-                    <input type="text" placeholder="Ingrese el nombre" id="txtNombre" name="txtNombre"/>
-                </div>    
-                
-                <div class="col-md-3">
-                    <label>Cantidad: </label>
-                    <input type="number" placeholder="Ingrese la cantidad" id="txtCantidad" name="txtCantidad"/>
+                <div class="form-row">
+                    <div class="col-md-3">
+                        <br>
+                        <label>Genero:</label>
+                        <select class="form-control" id="ddlGenero" name="ddlGenero">
+                            <option value="-1">--Seleccione--</option>
+                            <option value="1">Hombre</option>
+                            <option value="2">Mujer</option>
+                        </select>
+                    </div>  
+                    <div class="col-md-3">
+                        <br>
+                        <label>Categoria:</label>
+                        <select class="form-control" id="ddlCategoria" name="ddlCategoria">
+                            <option value="-1">--Seleccione--</option>
+                            <option value="1">Camisas</option>
+                            <option value="2">Correas</option>
+                            <option value="3">Zapatos</option>
+                            <option value="4">Calzado Dama</option>
+                        </select>
+                    </div>  
+                    <div class="col-md-3">
+                        <br>
+                        <label>Imagen:</label>
+                        <input placeholder="Ingrese la url" type="text" class="form-control" id="txtImagen" name="txtImagen" />
+                    </div>  
                 </div>
-                
-                <div class="col-md-3">
-                    <label>Precio: </label>
-                    <input type="number" placeholder="Ingrese el precio" id="txtPrecio" name="txtPrecio"/>
-                </div>
-            </div>
-            
-            <div class="form-row">
-                <div class="col-md-3">
-                    <br>
-                    <label>Genero: </label>
-                    <select class="form-control" id="ddlGenero" name="ddlGenero">
-                        <option value="-1">--Seleccione--</option>
-                        <option value="1">Hombre </option>
-                        <option value="2">Mujer</option>
-                    </select>
-                </div>
-                
-                <div class="col-md-3">
-                    <br>
-                    <label>Categoria: </label>
-                    <select class="form-control" id="ddlCategoria" name="ddlCategoria">
-                        <option value="-1">--Seleccione--</option>
-                        <option value="1">Camisetas</option>
-                        <option value="2">Correas</option>
-                        <option value="3">Calzado de Dama</option>
-                        <option value="4">Accesorios</option>
-                        
-                    </select>
+                <div class="form-row">
+                    <div class="col-md-12">
+                        <br>
+                        <input class="btn-outline-success btn" type="submit" value="Guardar" id="btnGuardar" name="btnGuardar" />
+                        <a class="btn-outline-primary btn" href="ListProduct.jsp">Ver</a>
+                        <a class="btn-outline-danger btn" href="ShoppingCartController?btnIndex=true">Carrito de compra</a>
+                    </div>
                 </div>
 
-            
-                <div class="col-md-6">
-                    <br>
-                    <label>Imagen:</label>
-                    <input type="text" class="form-control" id="txtImagen" name="txtImagen" placeholder="Ingrese la Url"/>
-                </div>   
-            </div>
-            <div class="form-row">
-                <br>
-                <div class="col-md-12">
-                    <br>
-                    <input class="btn-outline-success btn" type="submit" value="Guardar" id="btnGuardar" name="btnGuardar" /input> 
-                    <a class="btn-outline-primary btn" href="ListProduct.jsp">Detalle</a>
-                    <a class="btn-outline-danger btn" href="ShoppingCart.jsp">Carrito de Compra</a>
-                </div>
-                
-            </div>
-                
-                <%                 
-                    if (request.getAttribute("preview") !=null){
-                    %>
-                    <label class="badge badge-success">Resumen: <%= request.getAttribute("preview")%> </label><br>
-                    <br>
+                <%
+                    if (request.getAttribute("preview") != null) {
+                %>
+                <label class="badge badge-success">Resumen: <%= request.getAttribute("preview")%> </label><br>
                 <%
                     }
                 %>
+
+                <%
+                    if (request.getParameter("txtCodigo") != null
+                            && request.getParameter("txtNombre") != null) {
+                %>
+
+                <label class="badge badge-dark">Codigo: <%= request.getParameter("txtCodigo")%> </label><br>
+                <label class="badge badge-dark">Nombre: <%= request.getParameter("txtNombre")%> </label><br>
+                <label class="badge badge-dark">Cantidad: <%= request.getParameter("txtCantidad")%> </label><br>
+                <label class="badge badge-dark">Precio: <%= request.getParameter("txtPrecio")%> </label><br>
+
+                <%
+                    }
+                %>
+
             </form>
         </div>
             

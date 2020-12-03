@@ -34,7 +34,7 @@
   </ol>
 </nav>
 
-        <% if (request.getAttribute("message") != null) {%>
+         <% if (request.getAttribute("message") != null) {%>
 
         <input type="text" id="message" value="<%= request.getAttribute("message")%>" hidden="" />
         <input type="text" id="type" value="<%= request.getAttribute("type")%>" hidden="" />
@@ -49,8 +49,8 @@
         <%
             List<Product> products = new ArrayList();
             List<Product> shoppingCart = new ArrayList();
-            if (session.getAttribute("products") != null) {
-                products = (List<Product>) session.getAttribute("products");
+            if (request.getAttribute("products") != null) {
+                products = (List<Product>) request.getAttribute("products");
             }
             if (session.getAttribute("shoppingCart") != null) {
                 shoppingCart = (List<Product>) session.getAttribute("shoppingCart");
